@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Corona Virus Tracker Application</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+</head>
+
+<body>
+	<table>
+		<tr>
+			<th>State</th>
+			<th>Total Active cases</th>
+			<th>Total Confirmed cases</th>
+			<th>Total Death </th>
+		</tr>
+		<tr th:each="state: ${stateAllData}">
+			<td th:text="${state.stateData}"></td>
+			<td th:text="${state.activeAllCases}"></td>
+			<td th:text="${state.confirmedAllCases}"></td>
+			<td th:text="${state.deathsAllCases}"></td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

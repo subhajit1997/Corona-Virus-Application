@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Corona Virus Tracker Application</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="indiaData.css">
+</head>
+
+<body>
+	<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+		<a class="navbar-brand" href="http://localhost:8080/home">Corona
+			Tracker</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a class="nav-item nav-link active"
+					href="http://localhost:8080/home">Home <span class="sr-only"></span></a>
+				<a class="nav-item nav-link active" href="#">World Wide Data <span
+					class="sr-only">(current)</span></a> <a
+					class="nav-item nav-link active" href="#">India Data <span
+					class="sr-only"></span></a> <a
+					class="nav-item nav-link active" href="http://localhost:8080/map">Live
+					Map<span class="sr-only"></span>
+				</a>
+
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-md-7">
+				<table class="table table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">State</th>
+							<th scope="col">Total Active cases</th>
+							<th scope="col">Total Confirmed cases</th>
+							<th scope="col">Total Death</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="state: ${stateAllData}">
+							<td th:text="${state.stateData}"></td>
+							<td th:text="${state.activeAllCases}"></td>
+							<td th:text="${state.confirmedAllCases}"></td>
+							<td th:text="${state.deathsAllCases}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-12 col-md-5">
+				<div id="PieData" style="height: 400px"></div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+	
+	var availableTypes = [[${stateAllData}]];
+  	k=0;
+    var activeCases=[];
+    var otherCases;
+	for(i=0;i<8;i++)
+		{
+		console.log(availableTypes[i].stateData);
+		console.log(availableTypes[i].activeAllCases);
+		activeCases.push(parseInt(availableTypes[i].activeAllCases));
+		}
+	
+	var sum = activeCases.reduce(function(a, b){
+        return a + b;
+    }, 0);
+	otherCases=(2*(activeCases[0])-sum);
+	console.log('all case');
+	console.log(activeCases);
+		Highcharts.chart('PieData', {
+			chart : {
+				type : 'pie',
+				options3d : {
+					enabled : true,
+					alpha : 50,
+					beta : 0
+				}
+			},
+			title : {
+				text : 'State Data'
+			},
+			tooltip : {
+				pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b> <br>Active count:{point.y}  '
+			},
+			plotOptions : {
+				pie : {
+					allowPointSelect : true,
+					cursor : 'pointer',
+					depth : 35,
+					dataLabels : {
+						enabled : true,
+						format : '{point.name}'
+					}
+				}
+			},
+
+			series : [ {
+				type : 'pie',
+				name : 'Ratio',
+				data : [{ name: 'Others', y: otherCases },
+			            { name: 'Maharashtra', y:activeCases[1] },
+			            { name: 'Tamil Nadu', y: activeCases[2]},
+			            { name: 'Delhi', y: activeCases[3] },
+			            { name: 'Gujarat', y: activeCases[4]},
+			            { name: 'Uttar Pradesh', y: activeCases[5]},
+			            { name: 'Rajasthan', y:activeCases[6] },
+			            { name: 'West Bengal', y: activeCases[7]}]
+			} ]
+		});
+	</script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
