@@ -1,49 +1,67 @@
 package com.tracker.coronaviruslivetracker.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.tracker.coronaviruslivetracker.entity.Customer;
 import com.tracker.coronaviruslivetracker.services.CoronaVirusDataService;
+import com.tracker.coronaviruslivetracker.services.CustomerService;
 import com.tracker.coronaviruslivetracker.util.CoronaUtility;
-
-
 
 @Controller
 public class CoronaController {
 
-  @Autowired
-  private CoronaVirusDataService coronaVirusDataService;
+	// extra
+	@Autowired
+	private CustomerService customerService;
 
-  @Autowired
-  private CoronaUtility coronaUtility;
+	@Autowired
+	private CoronaVirusDataService coronaVirusDataService;
 
-  @GetMapping("/home")
-  public String Index(Model model) {
-    model.addAttribute("stateAllData", coronaVirusDataService.getAllState());
-    return "index";
-  }
+	@Autowired
+	private CoronaUtility coronaUtility;
 
-  @GetMapping("/state")
-  public String StateWisetracker(Model model) {
-    coronaUtility.PieChart(coronaVirusDataService.getAllState());
-    model.addAttribute("pass", 50);
-    model.addAttribute("fail", 50);
-    model.addAttribute("stateAllData", coronaVirusDataService.getAllState());
-    return "indiaData";
-  }
+	@GetMapping("/home")
+	public String Index(Model model) {
+		model.addAttribute("stateAllData", coronaVirusDataService.getAllState());
+		return "index";
+	}
 
-  @GetMapping("/world")
-  public String WorldWiseTracker(Model model) {
+	@GetMapping("/state")
+	public String StateWisetracker(Model model) {
+		coronaUtility.PieChart(coronaVirusDataService.getAllState());
+		model.addAttribute("pass", 50);
+		model.addAttribute("fail", 50);
+		model.addAttribute("stateAllData", coronaVirusDataService.getAllState());
+		return "indiaData";
+	}
 
-    model.addAttribute("stateAllData", coronaVirusDataService.getAllState());
-    return "worldData";
-  }
+	@GetMapping("/world")
+	public String WorldWiseTracker(Model model) {
 
-  @GetMapping("/map")
-  public String MapData(Model model) {
+		model.addAttribute("stateAllData", coronaVirusDataService.getAllState());
+		return "worldData";
+	}
 
-    return "mapData";
-  }
+	@GetMapping("/map")
+	public String MapData(Model model) {
+
+		return "mapData";
+	}
+
+	@GetMapping("/list")
+	public String listCustomers(Model theModel) {
+		// get customers from service
+		List<Customer> theCustomers = customerService.getCustomers();
+
+		// add customers to the model
+		theModel.addAttribute("customers", theCustomers);
+
+		return "list-customers";
+	}
 
 }

@@ -1,0 +1,17 @@
+#particles-js{
+	width: 100%;
+	height: 100%;
+	background: #000;
+}
+body{
+	margin: 0;
+	width:  100%;
+	padding: 0;
+
+}
+#particles-js canvas {
+    display:block;
+	background: linear-gradient(45deg,#000056,#0000ff,#70eeff);
+    position: fixed;
+    z-index: -1;
+}

@@ -6,15 +6,24 @@
 <head>
 <title>Corona Virus Tracker Application</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" th:href="@{/particle.css}" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+
 </head>
 
 <body>
+	<!--particle.js animation -->
+	<div id="particles-js"></div>
+	<script type="text/javascript" th:src="@{/particles.js}"></script>
+	<script type="text/javascript" th:src="@{/app.js}"></script>
+
+
+
 	<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
 		<a class="navbar-brand" href="#">Corona Tracker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -35,14 +44,17 @@
 			</div>
 		</div>
 	</nav>
-	<div class="jumbotron">
-		<h1 class="display-4">
+
+
+
+	<div style="background:transparent !important;" class="jumbotron">
+		<h1 style="color: white;" class="display-4">
 			Corona Tracker Application <a class="btn btn-primary btn"
 				href="http://localhost:8080/state" role="button">India Cases</a> <a
 				class="btn btn-primary btn" href="http://localhost:8080/state"
 				role="button">World Cases</a>
 		</h1>
-		<p class="lead">Get Data & information about covid-19 spread and
+		<p style="color: white;" class="lead">Get Data & information about covid-19 spread and
 			measures in our website</p>
 
 
